@@ -22,7 +22,6 @@ class Database {
             $username = $username ?? 'root';
             $password = $password ?? '';
             self::$instance = new Database($dsn,$username,$password);
-            self::$instance = new Database($dsn , $username,$password);
         }
         return self::$instance ;
     }
