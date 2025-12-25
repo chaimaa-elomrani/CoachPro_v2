@@ -1,0 +1,1 @@
+SELECT COUNT(*) FROM seances GROUP BY coach_id ;
