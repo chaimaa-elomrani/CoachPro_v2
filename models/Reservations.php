@@ -36,4 +36,16 @@ class Reservations extends User {
     public function setStatut($statut){
         $this->statut =$statut ; 
     }
+
+
+    public function createReservation(){
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("INSERT INTO reservations (user_id , session_id , statut)
+        VALUES (:user_id ,  :session_id , :statut)");
+        return $stmt->execute([
+            ':user_id' => $this->user_id, 
+            ':session_id' => $this->session_id,
+            ':statut' => $this->statut
+        ]);
+    }
 }
