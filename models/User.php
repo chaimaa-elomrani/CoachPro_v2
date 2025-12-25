@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
 
-class User {
+abstract class User {
     private $id ; 
     private $name ; 
     private $email ;
