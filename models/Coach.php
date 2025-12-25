@@ -56,5 +56,30 @@ class Coach extends User {
 
     }
 
+
+    public function  createSession($date, $heure, $duree){
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("INSERT INTO sessions (coach_id , date , heure , duree , statut)
+        VALUES (:coach_id , :date , :heure , :duree , :statut)");
+        return $stmt->execute([ 
+            ':coach_id' => $this->getId(),
+            ':date' => $date,
+            ':heure' => $heure,
+            ':duree' => $duree,
+            ':statut' => 'disponible'
+        ]);
+    }
+
+    public function deleteSession($session_id){
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("DELETE FROM sessions WHERE id = :session_id");
+        return $stmt->execute([
+            ':session_id' => $session_id
+        ]);
+    }
+
+    
+
+
     
 }
