@@ -53,7 +53,19 @@ class User {
         ]);
     }
 
-   
+    public function update(){
+        $db = Database::getInstance()->getConnection();
+        $sql = $db->prepare('UPDATE users SET name= :name , email =:email , password =:password , role = :role WHERE id = :id');
+        return $sql->execute([
+            ':name' => $this->name, 
+            ':email' => $this->email,
+            ':password' => $this->password,
+            ':role' => $this->role,
+            ':id' => $this->id
+        ]);
+    }
+
+
 
 
 }
