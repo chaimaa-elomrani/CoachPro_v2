@@ -65,7 +65,19 @@ class User {
         ]);
     }
 
+    public function delete(){
+        $db = Database::getInstance()->getConnection();
+        $sql = $db->prepare('DELETE FROM users WHERE id = :id');
+        return $sql->execute([
+            ':id' => $this->id
+        ]);
+    }
 
+    public function showAll(){
+        $db = Database::getInstance()->getConnection();
+        $sql = $db->query('SELECT * FROM users');
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 
 }
