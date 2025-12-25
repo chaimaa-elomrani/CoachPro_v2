@@ -48,4 +48,13 @@ class Reservations extends User {
             ':statut' => $this->statut
         ]);
     }
+
+
+    public function cancelReservation($reservation_id){
+        $db = Database::getInstance()->getConnection();
+        $sql = $db->prepare('DELETE FROM reservations WHERE id = :id');
+        return $sql->execute([
+            ':id' => $reservation_id
+        ]);
+    }
 }
