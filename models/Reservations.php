@@ -57,4 +57,18 @@ class Reservations extends User {
             ':id' => $reservation_id
         ]);
     }
+
+
+    public function updateResevation($reservation_id){
+        $db = Database::getInstance()->getConnection();
+        $sql = $db->prepare('UPDATE reservations SET user_id= :user_id , session_id =:session_id , statut =:statut WHERE id = :id');
+        return $sql->execute([
+            ':user_id' => $this->user_id, 
+            ':session_id' => $this->session_id,
+            ':statut' => $this->statut,
+            ':id' => $reservation_id
+        ]);
+    }
+    
+
 }
