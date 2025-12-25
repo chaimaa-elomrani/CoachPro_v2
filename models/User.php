@@ -41,7 +41,19 @@ class User {
     }
     
 
+    public function create(){
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("INSERT INTO users (name , email , password , role)
+        VALUES (:name ,  :email , :password , :role)");
+        return $stmt->execute([
+            ':name' => $this->name, 
+            ':email' => $this->email,
+            ':password' => $this->password,
+            ':role' => $this->role
+        ]);
+    }
 
+   
 
 
 }
