@@ -41,5 +41,20 @@ class Coach extends User {
     }
 
 
+    public function createCoach(){
+        $db = Database::getInstance()->getConnection();
+        // first we need to check if the user already exists with the role coach and they don't have a profile yet 
+        $this->create(); // create base user
+        $stmt = $db->prepare("INSERT INTO coaches (user_id , discipline , experience , sport_id)
+        VALUES (:user_id , :discipline , :experience , :sport_id)");
+        return $stmt->execute([
+            ':user_id' => $this->getId(), 
+            ':discipline' => $this->discipline,
+            ':experience' => $this->experience,
+            ':sport_id' => $this->sport_id
+        ]);
 
+    }
+
+    
 }
