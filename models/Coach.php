@@ -56,6 +56,17 @@ class Coach extends User {
 
     }
 
+    public function getAllCoaches(){
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT u.id, u.name, u.email, c.discipline, c.experience, s.name AS sport_name
+                              FROM users u
+                              JOIN coaches c ON u.id = c.user_id
+                              JOIN sports s ON c.sport_id = s.id
+                              WHERE u.role = 'coach'");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
  
 
