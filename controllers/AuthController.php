@@ -114,4 +114,44 @@ class AuthController
         }
     }
 
+
+    public function logout(){
+        session_unset();
+        session_destroy();
+        header('Location: ../views/login.php');
+        exit();
+    }
+
+
+    public function redirect($role){
+        if($role === 'coach'){
+            header('Location: ../views/coach/register_sp.php');
+        }else if ($role === 'sportif'){
+            header('Location: ../views/sportif/register_co.php');
+        }else{
+            header('Location: ../views/chooseRole.php');
+        }
+        exit();
+    }
+}
+
+//mini router for AuthController actions, works with query parameter 'action' in the way that it calls the appropriate method based on the action value
+if(isset($_GET['action'])){
+    $authController = new AuthController();
+    $action = $_GET['action'];
+
+    switch($action){
+        case 'register':
+            $authController->register();
+            break;
+        case 'login':
+            $authController->login();
+            break;
+        case 'logout':
+            $authController->logout();
+            break;
+        default:
+            header('Location: ../views/login.php');
+            exit();
+    }
 }
