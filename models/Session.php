@@ -63,5 +63,15 @@ class Session {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getSessionsByCoach($coach_id){
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT * FROM sessions WHERE coach_id = :coach_id");
+        $stmt->execute([
+            ':coach_id' => $coach_id
+        ]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     
 }
