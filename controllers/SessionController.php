@@ -129,3 +129,21 @@ class SessionController {
     }
 
 }
+
+
+if(isset($_GET['action'])){
+    $sessionController = new SessionController();
+    $action = $_GET['action'];
+
+       switch ($action) {
+        case 'create':
+            $controller->createSession();
+            break;
+        case 'delete':
+            $controller->deleteSession();
+            break;
+        default:
+            header('Location: ../index.php');
+            exit();
+    }
+}
