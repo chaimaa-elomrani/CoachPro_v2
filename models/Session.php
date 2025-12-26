@@ -73,5 +73,21 @@ class Session {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function countSessions(){
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT COUNT(*) as total_sessions FROM sessions");
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     
+        public function getReservatedSessions($coach_id){
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT COUNT(DISTINCT r.session_id ) as total FROM reservations r JOIN sessions s ON r.session_id = s.id WHERE s.coach_id = :coach_id and r.statut = 'confirmed'");
+        $stmt->execute([
+            ':coach_id' => $coach_id
+        ]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
 }

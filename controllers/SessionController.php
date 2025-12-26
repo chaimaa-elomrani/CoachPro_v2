@@ -55,5 +55,77 @@ class SessionController {
         }
     }
 
+    public function deleteSession($session_id){
+        if(!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'coach'){
+            $_SESSION['error'] = "only coaches can delete sessions.";
+            header('Location: ../views/login.php');
+            exit();
+        }
+
+        try{
+            $session = new Session();
+            if($session->deleteSession($session_id)){
+                $_SESSION['success'] = "Session deleted successfully.";
+                header('Location: ../views/coach/dashboard.php');
+            }else{
+                $_SESSION['error'] = "Failed to delete session.";
+                header('Location: ../views/coach/dashboard.php');
+            }
+            exit();
+        }catch(Exception $e){
+            $_SESSION['error'] = "An error occurred: " . $e->getMessage();
+            header('Location: ../views/coach/dashboard.php');
+            exit();
+        }
+    }
+
+
+    public function getCoachSessions($coach_id){
+        if($coach_id === null){
+            $coach_id = $_SESSION['user_id'] ?? null;
+        }
+        try{
+            $session = new Session();
+            return $session->getSessionsByCoach($coach_id);
+        }catch(Exception $e){
+            $_SESSION['error'] = "An error occurred: " . $e->getMessage();
+            header('Location: ../views/coach/dashboard.php');
+            exit();
+        }
+    }
+
+
+    public function getAllSessions(){
+        try{
+            $session = new Session();
+            return $session->getAllSessions();
+        }catch(Exception $e){
+            $_SESSION['error'] = "An error occurred: " . $e->getMessage();
+            header('Location: ../views/sportif/dashboard.php');
+            exit();
+        }
+    }
+
+    public function  countSessions(){
+        try{
+            $session = new Session();
+            return $session->countSessions();
+        }catch(Exception $e){
+            $_SESSION['error'] = "An error occurred: " . $e->getMessage();
+            header('Location: ../views/coach/dashboard.php');
+            exit();
+        }
+    }
+
+    public function getReservatedSessions($coach_id){
+        try{
+            $session = new Session();
+            return $session->getReservatedSessions($coach_id);
+        }catch(Exception $e){
+            $_SESSION['error'] = "An error occurred: " . $e->getMessage();
+            header('Location: ../views/coach/dashboard.php');
+            exit();
+        }
+    }
 
 }
